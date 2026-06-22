@@ -74,22 +74,25 @@ function render(): void {
     <main class="app">
       <h1>Air Clutch Counter</h1>
       <div class="counters">
-        <button class="counter counter--row" data-action="hit">
-          <span class="counter__value">${state.inARow}</span>
-          <span class="counter__label">In a row</span>
-          <span class="counter__hint">click: +1 (also Total)</span>
-        </button>
         <button class="counter counter--total" data-action="miss">
           <span class="counter__value">${state.total}</span>
           <span class="counter__label">Total</span>
           <span class="counter__hint">click: +1, reset streak</span>
+        </button>
+      </div>
+      <aside class="extra">
+        <h2 class="extra__title">Extra</h2>
+        <button class="counter counter--row" data-action="hit">
+          <span class="counter__value">${state.inARow}</span>
+          <span class="counter__label">In a row</span>
+          <span class="counter__hint">click: +1 (also Total)</span>
         </button>
         <button class="counter counter--bld" data-action="bld">
           <span class="counter__value">${state.bld}</span>
           <span class="counter__label">BLD</span>
           <span class="counter__hint">click: +1 (also Total)</span>
         </button>
-      </div>
+      </aside>
       <p class="best">Best streak: <strong>${state.best}</strong></p>
       <h2 class="milestones__title">Milestones</h2>
       <ul class="milestones">
