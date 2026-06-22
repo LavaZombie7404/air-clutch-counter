@@ -94,8 +94,58 @@ body {
   }
 }
 
+.milestones {
+  list-style: none;
+  margin: 0.75rem auto 0;
+  max-width: 22rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  &__title {
+    margin-top: 1.5rem;
+    font-size: 1.1rem;
+  }
+}
+
+.milestone {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.85rem;
+  border-radius: 0.5rem;
+  background: v.$panel;
+  border-left: 4px solid transparent;
+
+  &__goal {
+    font-weight: 600;
+  }
+
+  &__status {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  &--collected {
+    border-left-color: v.$accent;
+
+    .milestone__status {
+      color: v.$accent;
+    }
+  }
+
+  &--uncollected {
+    opacity: 0.65;
+
+    .milestone__status {
+      color: v.$muted;
+    }
+  }
+}
+
 .reset {
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   padding: 0.5rem 1rem;
   border: 1px solid v.$muted;
   border-radius: 0.5rem;

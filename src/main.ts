@@ -9,6 +9,8 @@ interface State {
 
 const STORAGE_KEY = "air-clutch-counter";
 
+const MILESTONES = [100, 250, 500, 750, 1000, 1500, 2000];
+
 function load(): State {
   const empty: State = { total: 0, inARow: 0, bld: 0, best: 0 };
   try {
@@ -88,6 +90,17 @@ function render(): void {
         </button>
       </div>
       <p class="best">Best streak: <strong>${state.best}</strong></p>
+      <h2 class="milestones__title">Milestones</h2>
+      <ul class="milestones">
+        ${MILESTONES.map((m) => {
+          const done = state.total >= m;
+          return `
+            <li class="milestone ${done ? "milestone--collected" : "milestone--uncollected"}">
+              <span class="milestone__goal">${m} total</span>
+              <span class="milestone__status">${done ? "collected" : "uncollected"}</span>
+            </li>`;
+        }).join("")}
+      </ul>
       <button class="reset" data-action="reset">Reset all</button>
     </main>
   `;
