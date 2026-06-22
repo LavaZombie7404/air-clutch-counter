@@ -22,8 +22,9 @@ function hit(): void {
   render();
 }
 
-/** Missed: the streak resets. Total is left alone. */
+/** Missed: Total still counts the attempt, but the streak resets. */
 function miss(): void {
+  state.total += 1;
   state.inARow = 0;
   render();
 }
@@ -51,7 +52,7 @@ function render(): void {
         <button class="counter counter--total" data-action="miss">
           <span class="counter__value">${state.total}</span>
           <span class="counter__label">Total</span>
-          <span class="counter__hint">click: reset streak</span>
+          <span class="counter__hint">click: +1, reset streak</span>
         </button>
         <button class="counter counter--bld" data-action="bld">
           <span class="counter__value">${state.bld}</span>
