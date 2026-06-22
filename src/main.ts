@@ -7,12 +7,28 @@ interface State {
   best: number;
 }
 
-const state: State = {
-  total: 0,
-  inARow: 0,
-  bld: 0,
-  best: 0,
-};
+const STORAGE_KEY = "air-clutch-counter";
+
+function load(): State {
+  const empty: State = { total: 0, inARow: 0, bld: 0, best: 0 };
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return empty;
+    return { ...empty, ...JSON.parse(raw) };
+  } catch {
+    return empty;
+  }
+}
+
+const state: State = load();
+
+function save(): void {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch {
+    // storage unavailable (private mode, etc.) — counters still work in-memory
+  }
+}
 
 /** Landed a normal clutch: streak + total go up. */
 function hit(): void {
@@ -36,9 +52,20 @@ function bldHit(): void {
   render();
 }
 
+/** Wipe everything back to zero. */
+function reset(): void {
+  if (!confirm("Reset all counters to zero?")) return;
+  state.total = 0;
+  state.inARow = 0;
+  state.bld = 0;
+  state.best = 0;
+  render();
+}
+
 const app = document.querySelector<HTMLDivElement>("#app");
 
 function render(): void {
+  save();
   if (!app) return;
   app.innerHTML = `
     <main class="app">
@@ -61,6 +88,7 @@ function render(): void {
         </button>
       </div>
       <p class="best">Best streak: <strong>${state.best}</strong></p>
+      <button class="reset" data-action="reset">Reset all</button>
     </main>
   `;
 }
@@ -77,6 +105,9 @@ app?.addEventListener("click", (e) => {
       break;
     case "bld":
       bldHit();
+      break;
+    case "reset":
+      reset();
       break;
   }
 });
