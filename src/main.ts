@@ -7,12 +7,13 @@ interface State {
   best: number;
 }
 
-const STORAGE_KEY = "air-clutch-counter";
+const STORAGE_KEY = "air-clutch-counter-v2";
 
 const MILESTONES = [100, 250, 500, 750, 1000, 1500, 2000];
 
 function load(): State {
-  const empty: State = { total: 0, inARow: 0, bld: 0, best: 0 };
+  // Seeded with your real current count so you can continue from there.
+  const empty: State = { total: 263, inARow: 0, bld: 0, best: 0 };
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return empty;
