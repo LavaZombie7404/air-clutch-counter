@@ -54,6 +54,19 @@ function bldHit(): void {
   render();
 }
 
+/** Manually set the total (e.g. to your real current count). Persisted to localStorage. */
+function setTotal(): void {
+  const input = prompt("Set total to:", String(state.total));
+  if (input === null) return;
+  const value = parseInt(input, 10);
+  if (Number.isNaN(value) || value < 0) {
+    alert("Please enter a whole number (0 or more).");
+    return;
+  }
+  state.total = value;
+  render();
+}
+
 /** Wipe everything back to zero. */
 function reset(): void {
   if (!confirm("Reset all counters to zero?")) return;
@@ -104,7 +117,10 @@ function render(): void {
             </li>`;
         }).join("")}
       </ul>
-      <button class="reset" data-action="reset">Reset all</button>
+      <div class="actions">
+        <button class="btn" data-action="set-total">Set total</button>
+        <button class="btn btn--reset" data-action="reset">Reset all</button>
+      </div>
     </main>
   `;
 }
@@ -121,6 +137,9 @@ app?.addEventListener("click", (e) => {
       break;
     case "bld":
       bldHit();
+      break;
+    case "set-total":
+      setTotal();
       break;
     case "reset":
       reset();
